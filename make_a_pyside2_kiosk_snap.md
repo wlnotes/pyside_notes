@@ -304,7 +304,7 @@ $ snap run mir-kiosk-pyside2-example
 $ snap install mir-kiosk
 ```
 
-因為我們期望的 Kiosk 程式是要在作業系統啟動後自動執行，且當程式當掉時，必須要有自動重啟的功能，所以我們需要再次修改 `snapcraft.yaml`，把 `apps:` 的內容修改成： 
+因為一般期望的 Kiosk 程式是要在作業系統啟動後自動執行，且當程式當掉時，必須要有自動重啟的功能，所以需要再次修改 `snapcraft.yaml`，把 `apps:` 的內容修改成： 
 ```yaml
 apps:
   daemon:
@@ -341,7 +341,7 @@ $ snap install --dangerous ./mir-kiosk-pyside2-example_0.1_amd64.snap
 
 現在應該可以看到 PySide2 app 在 Ubuntu Core 成功執行的畫面了！
 
-如果沒有成功執行，可以用 `sudo snap logs -f mir-kiosk-pyside2-example` 查看 logs。
+如果沒有成功執行，可以用 `sudo snap logs -f mir-kiosk-pyside2-example` 查看 logs，找出問題出在哪裡。
 
 如果想停止程式運行，可以用 `snap stop mir-kiosk-pyside2-example`。
 
@@ -350,14 +350,14 @@ $ snap install --dangerous ./mir-kiosk-pyside2-example_0.1_amd64.snap
 ## 注意事項
 
 - 用 pip 安裝的 PySide2 有自己的 .so 檔案，所以不需要在 `stage-packages:` 加入 `qtwayland` 與 `qt5-default` 等套件。
-- snap run 加上 --shell 可以用來查看 snap 內部檔案結構，例如：
+- snap run 加上 --shell 參數可以用來查看 snap 內部檔案結構，例如：
     ```sh
     $ snap run --shell mir-kiosk-pyside2-example
     $ ls $SNAP
     ```
     這樣會列出程式主要資料夾裡的檔案。
 
-- 因為我把環境變數 `PYTHONPATH` 設定成 `$SNAP/pyside/`，所以我們可以在 snap run --shell 模式裡用 `ls $SNAP/pyside/PySide2` 與 `ls $SNAP/pyside/PySide2/Qt/lib` 來查看 PySide2 有那些 .so 檔案。
+- 因為我把環境變數 `PYTHONPATH` 設定成 `$SNAP/pyside/`，所以可以在 snap run --shell 模式裡用 `ls $SNAP/pyside/PySide2` 與 `ls $SNAP/pyside/PySide2/Qt/lib` 來查看 PySide2 有那些 .so 檔案。
 - 需要把 `${SNAP}/pyside/PySide2/Qt/lib` 加到環境變數 `LD_LIBRARY_PATH` 裡，這樣 PySide2 程式執行時，才能找到正確的 .so 檔案。
 - 如果把 `snapcraft.yaml` 裡的 `#QT_DEBUG_PLUGINS: 1` 這行註解拿掉，可以用來查看 Qt 執行時的 logs，除錯時很有用。
 
