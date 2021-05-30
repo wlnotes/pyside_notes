@@ -88,6 +88,32 @@ $ mkdir src
 
 把 `app.py`、`__init__.py`、`description.txt` 這三個檔案放到 `src` 資料夾裡。
 
+然後在專案資料夾裡建立一個文字檔 `setup.py`，內容如下：
+```python
+import setuptools
+from distutils.core import setup
+import sys,os
+
+setup(
+    name = 'mir-kiosk-pyside2-example',
+    version = '0.1.0',
+    description = 'Mir-kiosk PySide2 example',
+    license='private',
+    author = 'hex',
+    packages = ['src'],
+    package_data={'src': ['description.txt']
+                 },
+    classifiers = [
+        'Operating System :: POSIX ::Linux'],
+    python_requires='>=3.6, <4',
+    entry_points = {
+        'console_scripts': [
+            'mir-kiosk-pyside2-example=src.app:main']
+            },
+)
+```
+ `setup.py` 是用來設定這個 python 程式的相關資訊。
+
 <br>
 
 接著在專案資料夾裡建立一個 `snap` 資料夾：
